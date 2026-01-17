@@ -1,5 +1,6 @@
-[gd_scene load_steps=9 format=3 uid="uid://vpsjcfexefcv"]
+[gd_scene load_steps=10 format=3 uid="uid://vpsjcfexefcv"]
 
+[ext_resource type="Script" uid="uid://d2724rhkmy082" path="res://level.gd" id="1_0b4ue"]
 [ext_resource type="PackedScene" uid="uid://bdaau0vqxi26q" path="res://player.tscn" id="1_oi3di"]
 [ext_resource type="Shader" uid="uid://bsfe7316tp74" path="res://sky.gdshader" id="3_f2txt"]
 [ext_resource type="Material" uid="uid://dofqt1d4r510w" path="res://default.tres" id="3_oi3di"]
@@ -20,6 +21,7 @@ sky = SubResource("Sky_wkftn")
 size = Vector2(1000, 1000)
 
 [node name="level" type="Node3D"]
+script = ExtResource("1_0b4ue")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 33.96306, 0)

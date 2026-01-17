@@ -29,21 +29,35 @@ max_contacts_reported = 2
 linear_damp = 1.0
 angular_damp = 50.0
 script = ExtResource("1_4flbx")
-jump_impulse = 4
 
 [node name="SpringArm3D" type="SpringArm3D" parent="."]
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 1.5, -0.5)
+transform = Transform3D(-0.93969274, 0, -0.34202024, 0, 0.9999999, 0, 0.34202024, 0, -0.93969274, 0, 1, 0)
 shape = SubResource("BoxShape3D_4flbx")
 spring_length = 2.0
 
 [node name="Hand" type="Area3D" parent="SpringArm3D"]
-transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -1.7484555e-07, 0, 2)
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 0, 1)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="SpringArm3D/Hand"]
 mesh = SubResource("BoxMesh_i3pqv")
 skeleton = NodePath("../CollisionShape3D")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="SpringArm3D/Hand"]
+shape = SubResource("BoxShape3D_onrkg")
+
+[node name="SpringArm3D2" type="SpringArm3D" parent="."]
+transform = Transform3D(-0.93969256, 0, 0.34202018, 0, 0.9999999, 0, -0.34202018, 0, -0.9396925, 0, 1, 0)
+shape = SubResource("BoxShape3D_4flbx")
+spring_length = 2.0
+
+[node name="Hand" type="Area3D" parent="SpringArm3D2"]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 0, 1)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SpringArm3D2/Hand"]
+mesh = SubResource("BoxMesh_i3pqv")
+skeleton = NodePath("../CollisionShape3D")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SpringArm3D2/Hand"]
 shape = SubResource("BoxShape3D_onrkg")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
