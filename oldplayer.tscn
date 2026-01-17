@@ -1,0 +1,50 @@
+[gd_scene load_steps=9 format=3 uid="uid://b5gqw0sqxad3g"]
+
+[ext_resource type="Script" uid="uid://cp1fcutnw7ivn" path="res://player.gd" id="1_6vsmk"]
+[ext_resource type="Texture2D" uid="uid://blt5un74i6pio" path="res://white_knuckle.png" id="2_mo6ct"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_7dm0k"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_4flbx"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_onrkg"]
+size = Vector3(1, 1, 0.1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i3pqv"]
+transparency = 1
+albedo_texture = ExtResource("2_mo6ct")
+uv1_scale = Vector3(1.809, 1.809, 1.809)
+uv1_offset = Vector3(0.2, 0.087, 0)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_onrkg"]
+size = Vector3(0.5, 0.5, 0.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_i3pqv"]
+size = Vector3(0.5, 0.5, 0.5)
+
+[node name="CharacterBody3D" type="CharacterBody3D"]
+script = ExtResource("1_6vsmk")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_7dm0k")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+
+[node name="Capsule Mesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CapsuleMesh_4flbx")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.01, 0, 1.5, -2)
+mesh = SubResource("BoxMesh_onrkg")
+skeleton = NodePath("")
+surface_material_override/0 = SubResource("StandardMaterial3D_i3pqv")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -2)
+shape = SubResource("BoxShape3D_onrkg")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CollisionShape3D2"]
+mesh = SubResource("BoxMesh_i3pqv")

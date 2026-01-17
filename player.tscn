@@ -1,0 +1,61 @@
+[gd_scene load_steps=8 format=3 uid="uid://bdaau0vqxi26q"]
+
+[ext_resource type="Script" uid="uid://cp1fcutnw7ivn" path="res://player.gd" id="1_4flbx"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_4flbx"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4flbx"]
+size = Vector3(0.5, 0.5, 0.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_i3pqv"]
+size = Vector3(0.5, 0.5, 0)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_onrkg"]
+size = Vector3(0.5, 0.5, 0)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4flbx"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_onrkg"]
+
+[node name="Player" type="RigidBody3D"]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
+axis_lock_angular_x = true
+axis_lock_angular_z = true
+physics_material_override = SubResource("PhysicsMaterial_4flbx")
+center_of_mass_mode = 1
+can_sleep = false
+contact_monitor = true
+max_contacts_reported = 2
+linear_damp = 1.0
+angular_damp = 50.0
+script = ExtResource("1_4flbx")
+jump_impulse = 4
+
+[node name="SpringArm3D" type="SpringArm3D" parent="."]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 1.5, -0.5)
+shape = SubResource("BoxShape3D_4flbx")
+spring_length = 2.0
+
+[node name="Hand" type="Area3D" parent="SpringArm3D"]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -1.7484555e-07, 0, 2)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SpringArm3D/Hand"]
+mesh = SubResource("BoxMesh_i3pqv")
+skeleton = NodePath("../CollisionShape3D")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SpringArm3D/Hand"]
+shape = SubResource("BoxShape3D_onrkg")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_4flbx")
+
+[node name="Camera" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+current = true
+
+[node name="Mesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+visible = false
+mesh = SubResource("CapsuleMesh_onrkg")
+skeleton = NodePath("../..")
