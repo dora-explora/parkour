@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://vpsjcfexefcv"]
+[gd_scene load_steps=12 format=3 uid="uid://vpsjcfexefcv"]
 
 [ext_resource type="Script" uid="uid://d2724rhkmy082" path="res://level.gd" id="1_0b4ue"]
 [ext_resource type="PackedScene" uid="uid://bdaau0vqxi26q" path="res://player.tscn" id="1_oi3di"]
@@ -18,7 +18,11 @@ sky = SubResource("Sky_wkftn")
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_oi3di"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_oi3di"]
-size = Vector2(1000, 1000)
+size = Vector2(100, 100)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0b4ue"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_f2txt"]
 
 [node name="level" type="Node3D"]
 script = ExtResource("1_0b4ue")
@@ -28,7 +32,6 @@ transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 3
 light_energy = 0.5
 
 [node name="Player" parent="." instance=ExtResource("1_oi3di")]
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 1, 0)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_q4iis")
@@ -55,3 +58,32 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 2, -0.5)
 use_collision = true
 size = Vector3(1, 5, 5)
 material = ExtResource("3_oi3di")
+
+[node name="Wall2" type="CSGBox3D" parent="."]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -8, 2, -3.5)
+use_collision = true
+size = Vector3(1, 5, 5)
+material = ExtResource("3_oi3di")
+
+[node name="Wall3" type="CSGBox3D" parent="."]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -11, 3, 2.5)
+use_collision = true
+size = Vector3(1, 5, 5)
+material = ExtResource("3_oi3di")
+
+[node name="Wall4" type="CSGBox3D" parent="."]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -14, 5, -2.5)
+use_collision = true
+size = Vector3(1, 5, 5)
+material = ExtResource("3_oi3di")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 6)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("BoxShape3D_0b4ue")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+mesh = SubResource("BoxMesh_f2txt")
+skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource("3_oi3di")
