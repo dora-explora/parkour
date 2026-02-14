@@ -17,7 +17,7 @@ margin = 0.1
 size = Vector3(0.5, 0.5, 0.5)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_onrkg"]
-size = Vector3(0.2, 0.5, 0)
+size = Vector3(0.4, 0.5, 0.2)
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_onrkg"]
 
@@ -25,6 +25,7 @@ size = Vector3(0.2, 0.5, 0)
 axis_lock_angular_x = true
 axis_lock_angular_z = true
 physics_material_override = SubResource("PhysicsMaterial_4flbx")
+gravity_scale = 1.5
 center_of_mass_mode = 1
 center_of_mass = Vector3(0, 1, 0)
 contact_monitor = true
@@ -32,7 +33,6 @@ max_contacts_reported = 10
 linear_damp = 0.5
 angular_damp = 50.0
 script = ExtResource("1_4flbx")
-foot_pushback = 500.0
 
 [node name="ColliderL" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -50,12 +50,12 @@ current = true
 [node name="FakeLHand" type="MeshInstance3D" parent="Camera"]
 transform = Transform3D(-0.08660254, -0.04698464, 0.017101007, 0, -0.034202013, -0.093969256, 0.05000001, -0.081379764, 0.029619807, -0.6, -0.46, -0.93)
 mesh = ExtResource("2_onrkg")
-skeleton = NodePath("../../LHand/Arm/Area/Collider")
+skeleton = NodePath("../../LHand/Arm/LHandArea/Collider")
 
 [node name="FakeRHand" type="MeshInstance3D" parent="Camera"]
 transform = Transform3D(0.08660254, -0.04698463, -0.017101007, 0, 0.034202017, -0.093969256, 0.05, 0.081379764, 0.029619811, 0.6, -0.5, -1)
 mesh = ExtResource("2_onrkg")
-skeleton = NodePath("../../LHand/Arm/Area/Collider")
+skeleton = NodePath("../../LHand/Arm/LHandArea/Collider")
 
 [node name="LHand" type="Node3D" parent="."]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 1.5, 0)
@@ -66,15 +66,17 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3, 0, 0.2)
 shape = SubResource("BoxShape3D_4flbx")
 spring_length = 2.0
 
-[node name="Area" type="Area3D" parent="LHand/Arm"]
+[node name="LHandArea" type="Area3D" parent="LHand/Arm"]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 0, 1)
+collision_mask = 0
 
-[node name="Mesh" type="MeshInstance3D" parent="LHand/Arm/Area"]
+[node name="Mesh" type="MeshInstance3D" parent="LHand/Arm/LHandArea"]
 transform = Transform3D(-0.1, 8.742278e-09, 0, 3.821371e-16, 4.371139e-09, -0.1, -8.742278e-09, -0.1, -4.371139e-09, 0, 0, 0.1)
 mesh = ExtResource("2_onrkg")
 skeleton = NodePath("../Collider")
 
-[node name="Collider" type="CollisionShape3D" parent="LHand/Arm/Area"]
+[node name="Collider" type="CollisionShape3D" parent="LHand/Arm/LHandArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0)
 shape = SubResource("BoxShape3D_onrkg")
 
 [node name="RHand" type="Node3D" parent="."]
@@ -86,15 +88,17 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.3, 0, 0.2)
 shape = SubResource("BoxShape3D_4flbx")
 spring_length = 2.0
 
-[node name="Area" type="Area3D" parent="RHand/Arm"]
+[node name="RHandArea" type="Area3D" parent="RHand/Arm"]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 0, 1)
+collision_mask = 0
 
-[node name="Mesh" type="MeshInstance3D" parent="RHand/Arm/Area"]
+[node name="Mesh" type="MeshInstance3D" parent="RHand/Arm/RHandArea"]
 transform = Transform3D(0.1, 0, 0, 0, -4.371139e-09, -0.1, 0, 0.1, -4.371139e-09, 0, 0, 0)
 mesh = ExtResource("2_onrkg")
 skeleton = NodePath("../Collider")
 
-[node name="Collider" type="CollisionShape3D" parent="RHand/Arm/Area"]
+[node name="Collider" type="CollisionShape3D" parent="RHand/Arm/RHandArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0)
 shape = SubResource("BoxShape3D_onrkg")
 
 [node name="LFoot" type="Node3D" parent="."]
@@ -106,15 +110,16 @@ transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, -0.2
 shape = SubResource("BoxShape3D_4flbx")
 spring_length = 2.0
 
-[node name="Area" type="Area3D" parent="LFoot/Leg"]
+[node name="HandArea" type="Area3D" parent="LFoot/Leg"]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 0, 1)
+collision_mask = 3
 
-[node name="Mesh" type="MeshInstance3D" parent="LFoot/Leg/Area"]
+[node name="Mesh" type="MeshInstance3D" parent="LFoot/Leg/HandArea"]
 transform = Transform3D(-0.1, 8.742278e-09, 3.821371e-16, 0, -4.371139e-09, 0.1, 8.742278e-09, 0.1, 4.371139e-09, 0, 0, 0)
 mesh = ExtResource("3_i3pqv")
 skeleton = NodePath("../Collider")
 
-[node name="Collider" type="CollisionShape3D" parent="LFoot/Leg/Area"]
+[node name="Collider" type="CollisionShape3D" parent="LFoot/Leg/HandArea"]
 transform = Transform3D(1, 0, 1.6703743e-22, 0, 1, 0, 1.6703743e-22, 0, 1, 0, -0.12, 0)
 shape = SubResource("BoxShape3D_onrkg")
 

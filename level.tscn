@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://vpsjcfexefcv"]
+[gd_scene load_steps=11 format=3 uid="uid://vpsjcfexefcv"]
 
 [ext_resource type="Script" uid="uid://d2724rhkmy082" path="res://level.gd" id="1_0b4ue"]
 [ext_resource type="PackedScene" uid="uid://bdaau0vqxi26q" path="res://player.tscn" id="1_oi3di"]
@@ -18,11 +18,10 @@ sky = SubResource("Sky_wkftn")
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_oi3di"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_oi3di"]
-size = Vector2(100, 100)
+size = Vector2(1000, 1000)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_0b4ue"]
-
-[sub_resource type="BoxMesh" id="BoxMesh_f2txt"]
+size = Vector3(0.7, 0.7, 5)
 
 [node name="level" type="Node3D"]
 script = ExtResource("1_0b4ue")
@@ -53,11 +52,24 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -6)
 use_collision = true
 material = ExtResource("3_oi3di")
 
-[node name="Wall" type="CSGBox3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 2, -0.5)
+[node name="Cube2" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.24023438, 9)
 use_collision = true
-size = Vector3(1, 5, 5)
+size = Vector3(5, 0.48046875, 1)
 material = ExtResource("3_oi3di")
+
+[node name="Wall" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 1, -0.5)
+use_collision = true
+size = Vector3(1, 3, 5)
+material = ExtResource("3_oi3di")
+
+[node name="Ledge" type="Area3D" parent="Wall" groups=["ledge"]]
+collision_layer = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Wall/Ledge"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 1.5, 0)
+shape = SubResource("BoxShape3D_0b4ue")
 
 [node name="Wall2" type="CSGBox3D" parent="."]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -8, 2, -3.5)
@@ -76,14 +88,3 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -14,
 use_collision = true
 size = Vector3(1, 5, 5)
 material = ExtResource("3_oi3di")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 6)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
-shape = SubResource("BoxShape3D_0b4ue")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
-mesh = SubResource("BoxMesh_f2txt")
-skeleton = NodePath("../..")
-surface_material_override/0 = ExtResource("3_oi3di")
