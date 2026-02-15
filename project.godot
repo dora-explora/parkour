@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="parkour"
-run/main_scene="uid://vpsjcfexefcv"
+run/main_scene="uid://ua8i7vaqu7ph"
 config/features=PackedStringArray("4.5", "Forward Plus")
 
 [display]

@@ -1,6 +1,7 @@
 extends Node3D
 
 func _ready():
+	$Player/Mesh.visible = false
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	for ledge in get_tree().get_nodes_in_group("ledge"):
 		# print("connecting ", ledge.name)

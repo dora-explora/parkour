@@ -8,8 +8,10 @@ var jump_forward_impulse = 5.
 var h_sens = 0.15
 var v_sens = 0.0025
 var hand_length = 2.
-var pushback = 5000.
-var v_pushback = 0.2
+#var pushback = 5000.
+var pushback = 0.
+#var v_pushback = 0.2
+var v_pushback = 0.
 var foot_pushback = 1000.
 var arm_min = 30.
 var getup_impulse = 7.
@@ -29,11 +31,14 @@ func _physics_process(delta: float) -> void:
 	if _on_floor && linear_velocity.length() < speed:
 		apply_central_force(direction * acceleration * delta)
 
-	if !_on_floor && !direction.is_zero_approx():
+	if !_on_floor && direction:
 		var horizontal_velocity = Vector3(linear_velocity.x, 0, linear_velocity.z)
 		if horizontal_velocity.length() >= speed:
 			apply_central_force(-horizontal_velocity.normalized() * aircceleration * delta)
 		apply_central_force(direction * aircceleration * delta)
+
+	if _on_floor: physics_material_override.friction = 3.
+	else: physics_material_override.friction = 0.
 
 	if Input.is_action_just_pressed("jump") && _on_floor && !_moving:
 		apply_central_impulse(Vector3.UP * jump_impulse)
@@ -49,22 +54,8 @@ func _physics_process(delta: float) -> void:
 	process_arm(shift && lclick, $LHand, $Camera/FakeLHand, $LedgeLHand, 0, delta)
 	process_arm(shift && rclick, $RHand, $Camera/FakeRHand, $LedgeRHand, 1, delta)
 
-	if not shift && lclick && _moving:
-		leg_posrot($LFoot, 0, delta)
-		leg_pushback($LFoot, 0, delta)
-		$LFoot.visible = true
-		$FakeLFoot.visible = false
-	else:
-		$LFoot.visible = false
-		$FakeLFoot.visible = true
-	if not shift && rclick && _moving:
-		leg_posrot($RFoot, 0, delta)
-		leg_pushback($RFoot, 1, delta)
-		$RFoot.visible = true
-		$FakeRFoot.visible = false
-	else:
-		$RFoot.visible = false
-		$FakeRFoot.visible = true
+	process_leg(not shift && lclick, input_dir.y, $LFoot, $FakeLFoot, 0, delta)
+	process_leg(not shift && rclick, input_dir.y, $RFoot, $FakeRFoot, 1, delta)
 
 func process_arm(held: bool, hand: Node3D, fake: Node3D, ledgehand: Node3D, index: int, delta: float):
 	if _grabbings[index]:
@@ -153,6 +144,20 @@ func during_ledge(ledge: Area3D, delta: float):
 	var mstrength = ledge_movestrength
 	apply_central_force(mdir * mstrength * delta)
 
+func process_leg(held: bool, forward: float, foot: Node3D, fake: Node3D, index: int, delta: float):
+	if held && _moving:
+		leg_posrot(foot, index, delta)
+		var lookingatwall = false
+		if $Camera/RayCast3D.is_colliding():
+			if $Camera/RayCast3D.get_collision_normal().y < 0.5:
+				lookingatwall = true
+		leg_pushback(foot, forward != 1. && lookingatwall, index, delta)
+		foot.visible = true
+		fake.visible = false
+	else:
+		foot.visible = false
+		fake.visible = true
+
 func leg_posrot(foot: Node3D, index: int, delta: float):
 	foot.global_position = position + Vector3(0., 1.4, 0.) * basis
 	var foot_error = rotation.y - foot.rotation.y
@@ -177,21 +182,21 @@ func leg_posrot_snap(foot: Node3D):
 	var error = $Camera.rotation.x - leg.rotation.x + 3*PI/4
 	leg.rotate_x(error)
 
-func leg_pushback(foot: Node, index: int, delta: float):
+func leg_pushback(foot: Node, gp: bool, index: int, delta: float):
 	var leg = foot.get_node("Leg")
 	var length = (leg.get_length() - leg.get_hit_length()) / leg.get_length()
 	var pbstrength = 1000. * pow(length, 0.3)
-	var xkick = (1 - _feetav[index].x * 2.)
+	var xkick = .5 - _feetav[index].x
 	var xdir = sin(leg.rotation.x - PI/2) * sin(rotation.y) * xkick
 	var ydir = cos(leg.rotation.x - PI/2) * 2.
 	var zdir = sin(leg.rotation.x - PI/2) * cos(rotation.y) * xkick
+	if gp: ydir /= 5.	# stands for glitch protection btw
 	var pbdir = Vector3(xdir, ydir, zdir)
 	apply_central_force(pbstrength * pbdir * delta)
 
 func _on_timer_timeout():
 	if _moving && _on_floor:
 		apply_central_impulse(Vector3.UP * getup_impulse)
-		_on_floor = false
 		_moving = false
 		$ColliderL.disabled = false
 		$ColliderS.disabled = true

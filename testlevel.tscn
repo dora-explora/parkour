@@ -1,12 +1,12 @@
 [gd_scene load_steps=12 format=3 uid="uid://vpsjcfexefcv"]
 
-[ext_resource type="Script" uid="uid://d2724rhkmy082" path="res://level.gd" id="1_0b4ue"]
-[ext_resource type="PackedScene" uid="uid://bdaau0vqxi26q" path="res://player.tscn" id="1_oi3di"]
-[ext_resource type="Shader" uid="uid://bsfe7316tp74" path="res://sky.gdshader" id="3_f2txt"]
-[ext_resource type="Material" uid="uid://dofqt1d4r510w" path="res://default.tres" id="3_oi3di"]
+[ext_resource type="Script" uid="uid://d2724rhkmy082" path="res://level.gd" id="1_kx2s4"]
+[ext_resource type="PackedScene" uid="uid://bdaau0vqxi26q" path="res://player.tscn" id="2_b5yu0"]
+[ext_resource type="Shader" uid="uid://bsfe7316tp74" path="res://sky.gdshader" id="3_8ws1j"]
+[ext_resource type="Material" uid="uid://dofqt1d4r510w" path="res://default.tres" id="4_vfacy"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_2nifc"]
-shader = ExtResource("3_f2txt")
+shader = ExtResource("3_8ws1j")
 
 [sub_resource type="Sky" id="Sky_wkftn"]
 sky_material = SubResource("ShaderMaterial_2nifc")
@@ -27,14 +27,14 @@ size = Vector3(0.2, 0.6, 1)
 size = Vector3(0.1, 0.1, 0.7)
 
 [node name="level" type="Node3D"]
-script = ExtResource("1_0b4ue")
+script = ExtResource("1_kx2s4")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 33.96306, 0)
 light_energy = 0.5
 shadow_enabled = true
 
-[node name="Player" parent="." instance=ExtResource("1_oi3di")]
+[node name="Player" parent="." instance=ExtResource("2_b5yu0")]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_q4iis")
@@ -49,24 +49,24 @@ shape = SubResource("WorldBoundaryShape3D_oi3di")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.016137242, 0)
 mesh = SubResource("PlaneMesh_oi3di")
 skeleton = NodePath("../..")
-surface_material_override/0 = ExtResource("3_oi3di")
+surface_material_override/0 = ExtResource("4_vfacy")
 
 [node name="Cube" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -6)
 use_collision = true
-material = ExtResource("3_oi3di")
+material = ExtResource("4_vfacy")
 
 [node name="Cube2" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.24023438, 9)
 use_collision = true
 size = Vector3(5, 0.48046875, 1)
-material = ExtResource("3_oi3di")
+material = ExtResource("4_vfacy")
 
 [node name="Wall" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 1, -0.5)
 use_collision = true
 size = Vector3(1, 3, 5)
-material = ExtResource("3_oi3di")
+material = ExtResource("4_vfacy")
 
 [node name="Ledge" type="Area3D" parent="Wall" groups=["ledge"]]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -0.5, 1.5, 0.5)
@@ -96,7 +96,7 @@ mesh = SubResource("BoxMesh_0b4ue")
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -8, 2, -3.5)
 use_collision = true
 size = Vector3(1, 5, 5)
-material = ExtResource("3_oi3di")
+material = ExtResource("4_vfacy")
 
 [node name="Ledge" type="Area3D" parent="Wall2" groups=["ledge"]]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -0.5, 2.5, 0.5)
@@ -126,10 +126,10 @@ mesh = SubResource("BoxMesh_0b4ue")
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -11, 3, 2.5)
 use_collision = true
 size = Vector3(1, 5, 5)
-material = ExtResource("3_oi3di")
+material = ExtResource("4_vfacy")
 
 [node name="Wall4" type="CSGBox3D" parent="."]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -14, 5, -2.5)
 use_collision = true
 size = Vector3(1, 5, 5)
-material = ExtResource("3_oi3di")
+material = ExtResource("4_vfacy")

@@ -64,6 +64,9 @@ transform = Transform3D(0.08660254, -0.04698463, -0.017101007, 0, 0.034202017, -
 mesh = ExtResource("2_onrkg")
 skeleton = NodePath("../../LHand/Arm/LHandArea/Collider")
 
+[node name="RayCast3D" type="RayCast3D" parent="Camera"]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
+
 [node name="LHand" type="Node3D" parent="."]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 1.5, 0)
 top_level = true
@@ -110,6 +113,7 @@ shape = SubResource("BoxShape3D_onrkg")
 
 [node name="LedgeLHand" type="Node3D" parent="."]
 top_level = true
+visible = false
 
 [node name="Mesh" type="MeshInstance3D" parent="LedgeLHand"]
 transform = Transform3D(4.371139e-09, 0.1, -4.371139e-09, 0, -4.371139e-09, -0.1, 0.1, -4.371139e-09, 1.9106854e-16, 0.08, -0.1, 0)
@@ -118,6 +122,7 @@ skeleton = NodePath("../..")
 
 [node name="LedgeRHand" type="Node3D" parent="."]
 top_level = true
+visible = false
 
 [node name="Mesh" type="MeshInstance3D" parent="LedgeRHand"]
 transform = Transform3D(-4.371139e-09, 0.1, -4.371139e-09, 0, -4.371139e-09, -0.1, -0.1, -4.371139e-09, 1.9106854e-16, 0.08, -0.1, 0)

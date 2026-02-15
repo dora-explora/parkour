@@ -1,0 +1,271 @@
+[gd_scene load_steps=10 format=3 uid="uid://ua8i7vaqu7ph"]
+
+[ext_resource type="Script" uid="uid://d2724rhkmy082" path="res://level.gd" id="1_v38iq"]
+[ext_resource type="PackedScene" uid="uid://bdaau0vqxi26q" path="res://player.tscn" id="2_v8kj3"]
+[ext_resource type="Shader" uid="uid://bsfe7316tp74" path="res://sky.gdshader" id="3_crycw"]
+[ext_resource type="Material" uid="uid://dofqt1d4r510w" path="res://default.tres" id="4_i2041"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2nifc"]
+shader = ExtResource("3_crycw")
+
+[sub_resource type="Sky" id="Sky_wkftn"]
+sky_material = SubResource("ShaderMaterial_2nifc")
+
+[sub_resource type="Environment" id="Environment_q4iis"]
+background_mode = 2
+sky = SubResource("Sky_wkftn")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0b4ue"]
+size = Vector3(0.5, 0.6, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_0b4ue"]
+size = Vector3(0.1, 0.1, 0.7)
+
+[node name="level" type="Node3D"]
+script = ExtResource("1_v38iq")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 33.96306, 0)
+light_energy = 0.5
+shadow_enabled = true
+
+[node name="Player" parent="." instance=ExtResource("2_v8kj3")]
+top_level = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_q4iis")
+
+[node name="Wall" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 1, -0.5)
+use_collision = true
+size = Vector3(1, 3, 5)
+material = ExtResource("4_i2041")
+
+[node name="Ledge" type="Area3D" parent="Wall" groups=["ledge"]]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -0.5, 1.5, 0.5)
+collision_layer = 0
+
+[node name="Collider" type="CollisionShape3D" parent="Wall/Ledge"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, -0.3, 0)
+shape = SubResource("BoxShape3D_0b4ue")
+
+[node name="Mesh" type="MeshInstance3D" parent="Wall/Ledge"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, -0.05, 0)
+mesh = SubResource("BoxMesh_0b4ue")
+
+[node name="Ledge2" type="Area3D" parent="Wall" groups=["ledge"]]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -0.5, 1.5, -0.5)
+collision_layer = 0
+
+[node name="Collider" type="CollisionShape3D" parent="Wall/Ledge2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, -0.3, 0)
+shape = SubResource("BoxShape3D_0b4ue")
+
+[node name="Mesh" type="MeshInstance3D" parent="Wall/Ledge2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, -0.05, 0)
+mesh = SubResource("BoxMesh_0b4ue")
+
+[node name="Platform1" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3, -3.5)
+use_collision = true
+size = Vector3(5, 5, 12)
+material = ExtResource("4_i2041")
+
+[node name="Bench" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.3, -9)
+use_collision = true
+size = Vector3(5, 0.4, 1)
+material = ExtResource("4_i2041")
+
+[node name="Platform2" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, -16)
+use_collision = true
+size = Vector3(5, 1, 5)
+material = ExtResource("4_i2041")
+
+[node name="Platform3" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -25)
+use_collision = true
+size = Vector3(5, 8, 5)
+material = ExtResource("4_i2041")
+
+[node name="Ledge1" type="Area3D" parent="Platform3" groups=["ledge"]]
+transform = Transform3D(1.3113416e-07, 0, -1, 0, 1, 0, 1, 0, 1.3113416e-07, 0.5, 4, 2.5)
+collision_layer = 0
+
+[node name="Collider" type="CollisionShape3D" parent="Platform3/Ledge1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, -0.3, 0)
+shape = SubResource("BoxShape3D_0b4ue")
+
+[node name="Mesh" type="MeshInstance3D" parent="Platform3/Ledge1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, -0.05, 0)
+mesh = SubResource("BoxMesh_0b4ue")
+
+[node name="Ledge2" type="Area3D" parent="Platform3" groups=["ledge"]]
+transform = Transform3D(1.3113416e-07, 0, -1, 0, 1, 0, 1, 0, 1.3113416e-07, -0.5, 4, 2.5)
+collision_layer = 0
+
+[node name="Collider" type="CollisionShape3D" parent="Platform3/Ledge2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, -0.3, 0)
+shape = SubResource("BoxShape3D_0b4ue")
+
+[node name="Mesh" type="MeshInstance3D" parent="Platform3/Ledge2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, -0.05, 0)
+mesh = SubResource("BoxMesh_0b4ue")
+
+[node name="Slope1" type="CSGPolygon3D" parent="."]
+transform = Transform3D(1.3113416e-07, 0, 1, 0, 1, 0, -1, 0, 1.3113416e-07, 2.5, -3.5, -27.5)
+use_collision = true
+polygon = PackedVector2Array(0, 0, 0, 8, 20, 0)
+depth = 5.0
+material = ExtResource("4_i2041")
+
+[node name="Platform4" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3, -55.5)
+use_collision = true
+size = Vector3(3, 1, 4)
+material = ExtResource("4_i2041")
+
+[node name="Platform5" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.5, -70.5)
+use_collision = true
+size = Vector3(5, 8, 10)
+material = ExtResource("4_i2041")
+
+[node name="Ledge1" type="Area3D" parent="Platform5" groups=["ledge"]]
+transform = Transform3D(1.3113416e-07, 0, -1, 0, 1, 0, 1, 0, 1.3113416e-07, 0.5, 4, 5)
+collision_layer = 0
+
+[node name="Collider" type="CollisionShape3D" parent="Platform5/Ledge1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, -0.3, 0)
+shape = SubResource("BoxShape3D_0b4ue")
+
+[node name="Mesh" type="MeshInstance3D" parent="Platform5/Ledge1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, -0.05, 0)
+mesh = SubResource("BoxMesh_0b4ue")
+
+[node name="Ledge2" type="Area3D" parent="Platform5" groups=["ledge"]]
+transform = Transform3D(1.3113416e-07, 0, -1, 0, 1, 0, 1, 0, 1.3113416e-07, -0.5, 4, 5)
+collision_layer = 0
+
+[node name="Collider" type="CollisionShape3D" parent="Platform5/Ledge2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, -0.3, 0)
+shape = SubResource("BoxShape3D_0b4ue")
+
+[node name="Mesh" type="MeshInstance3D" parent="Platform5/Ledge2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, -0.05, 0)
+mesh = SubResource("BoxMesh_0b4ue")
+
+[node name="Platform6" type="CSGBox3D" parent="."]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -8, -1.5, -84)
+use_collision = true
+size = Vector3(5, 8, 5)
+material = ExtResource("4_i2041")
+
+[node name="Ledge1" type="Area3D" parent="Platform6" groups=["ledge"]]
+transform = Transform3D(1.3113416e-07, 0, -1, 0, 1, 0, 1, 0, 1.3113416e-07, 0.5, 4, 2.5)
+collision_layer = 0
+
+[node name="Collider" type="CollisionShape3D" parent="Platform6/Ledge1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, -0.3, 0)
+shape = SubResource("BoxShape3D_0b4ue")
+
+[node name="Mesh" type="MeshInstance3D" parent="Platform6/Ledge1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, -0.05, 0)
+mesh = SubResource("BoxMesh_0b4ue")
+
+[node name="Ledge2" type="Area3D" parent="Platform6" groups=["ledge"]]
+transform = Transform3D(1.3113416e-07, 0, -1, 0, 1, 0, 1, 0, 1.3113416e-07, -0.5, 4, 2.5)
+collision_layer = 0
+
+[node name="Collider" type="CollisionShape3D" parent="Platform6/Ledge2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, -0.3, 0)
+shape = SubResource("BoxShape3D_0b4ue")
+
+[node name="Mesh" type="MeshInstance3D" parent="Platform6/Ledge2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, -0.05, 0)
+mesh = SubResource("BoxMesh_0b4ue")
+
+[node name="Platform7" type="CSGBox3D" parent="."]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 2, 5, -84.5)
+use_collision = true
+size = Vector3(3, 1, 4)
+material = ExtResource("4_i2041")
+
+[node name="Platform8" type="CSGBox3D" parent="."]
+transform = Transform3D(-3.0908623e-08, -0.70710677, -0.7071067, 1, -4.3711385e-08, 1.7763567e-15, -3.090862e-08, -0.7071067, 0.70710677, -4.2928934, 6, -78.20711)
+use_collision = true
+size = Vector3(7, 1, 6)
+material = ExtResource("4_i2041")
+
+[node name="Platform9" type="CSGBox3D" parent="."]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, -25, -6, -85.5)
+use_collision = true
+size = Vector3(3, 1, 4)
+material = ExtResource("4_i2041")
+
+[node name="Platform10" type="CSGBox3D" parent="."]
+transform = Transform3D(0.258819, -0.9659258, 0, 0.9659258, 0.258819, 0, 0, 0, 1, -25.394728, -8.90299, -85.5)
+use_collision = true
+size = Vector3(3, 1, 4)
+material = ExtResource("4_i2041")
+
+[node name="Platform11" type="CSGBox3D" parent="."]
+transform = Transform3D(0.49999997, -0.8660254, 0, 0.8660254, 0.49999997, 0, 0, 0, 1, -26.52115, -11.610711, -85.5)
+use_collision = true
+size = Vector3(3, 1, 4)
+material = ExtResource("4_i2041")
+
+[node name="Platform12" type="CSGBox3D" parent="."]
+transform = Transform3D(0.7071067, -0.70710677, 0, 0.70710677, 0.7071067, 0, 0, 0, 1, -28.305113, -13.897151, -85.5)
+use_collision = true
+size = Vector3(3, 1, 4)
+material = ExtResource("4_i2041")
+
+[node name="Platform13" type="CSGBox3D" parent="."]
+transform = Transform3D(0.86602527, -0.5, 0, 0.5, 0.86602527, 0, 0, 0, 1, -30.629015, -15.663544, -85.5)
+use_collision = true
+size = Vector3(3, 1, 4)
+material = ExtResource("4_i2041")
+
+[node name="Platform14" type="CSGBox3D" parent="."]
+transform = Transform3D(0.9659257, -0.25881907, 0, 0.25881907, 0.9659257, 0, 0, 0, 1, -33.12588, -16.640774, -85.5)
+use_collision = true
+size = Vector3(3, 1, 4)
+material = ExtResource("4_i2041")
+
+[node name="Platform15" type="CSGBox3D" parent="."]
+transform = Transform3D(0.9999999, -5.9604645e-08, 0, 5.9604645e-08, 0.9999999, 0, 0, 0, 1, -36, -17, -85.5)
+use_collision = true
+size = Vector3(3, 1, 4)
+material = ExtResource("4_i2041")
+
+[node name="Platform16" type="CSGBox3D" parent="."]
+transform = Transform3D(0.9999999, -5.9604645e-08, 0, 5.9604645e-08, 0.9999999, 0, 0, 0, 1, -59.5, -17, -85.5)
+use_collision = true
+size = Vector3(12, 1, 4)
+material = ExtResource("4_i2041")
+
+[node name="Ledge1" type="Area3D" parent="Platform16" groups=["ledge"]]
+transform = Transform3D(1, 5.960465e-08, 1.7484554e-07, -5.9604645e-08, 1, -5.960465e-08, -1.7484555e-07, 5.960465e-08, 1, 6, 0.5, -0.5)
+collision_layer = 0
+
+[node name="Collider" type="CollisionShape3D" parent="Platform16/Ledge1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, -0.3, 0)
+shape = SubResource("BoxShape3D_0b4ue")
+
+[node name="Mesh" type="MeshInstance3D" parent="Platform16/Ledge1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, -0.05, 0)
+mesh = SubResource("BoxMesh_0b4ue")
+
+[node name="Ledge2" type="Area3D" parent="Platform16" groups=["ledge"]]
+transform = Transform3D(1, 5.960465e-08, 1.7484554e-07, -5.9604645e-08, 1, -5.960465e-08, -1.7484555e-07, 5.960465e-08, 1, 6, 0.5, 0.5)
+collision_layer = 0
+
+[node name="Collider" type="CollisionShape3D" parent="Platform16/Ledge2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, -0.3, 0)
+shape = SubResource("BoxShape3D_0b4ue")
+
+[node name="Mesh" type="MeshInstance3D" parent="Platform16/Ledge2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, -0.05, 0)
+mesh = SubResource("BoxMesh_0b4ue")
