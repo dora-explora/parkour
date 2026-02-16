@@ -1,9 +1,9 @@
 [gd_scene load_steps=15 format=3 uid="uid://btueriwkwx0fx"]
 
-[ext_resource type="Script" uid="uid://d2724rhkmy082" path="res://level.gd" id="1_5mrt3"]
-[ext_resource type="PackedScene" uid="uid://bdaau0vqxi26q" path="res://player.tscn" id="2_rwowx"]
-[ext_resource type="Shader" uid="uid://bsfe7316tp74" path="res://sky.gdshader" id="3_hu44a"]
-[ext_resource type="Material" uid="uid://dofqt1d4r510w" path="res://default.tres" id="4_0cr88"]
+[ext_resource type="Script" uid="uid://d2724rhkmy082" path="res://scripts/level.gd" id="1_5mrt3"]
+[ext_resource type="PackedScene" uid="uid://bdaau0vqxi26q" path="res://scenes/player.tscn" id="2_rwowx"]
+[ext_resource type="Shader" uid="uid://bsfe7316tp74" path="res://assets/sky.gdshader" id="3_hu44a"]
+[ext_resource type="Material" uid="uid://dofqt1d4r510w" path="res://assets/default.tres" id="4_0cr88"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_2nifc"]
 shader = ExtResource("3_hu44a")
@@ -44,7 +44,7 @@ light_energy = 0.5
 shadow_enabled = true
 
 [node name="Player" parent="." instance=ExtResource("2_rwowx")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -100, 19, 0)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 10, 0)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_q4iis")
@@ -61,35 +61,80 @@ mesh = SubResource("PlaneMesh_oi3di")
 skeleton = NodePath("../..")
 surface_material_override/0 = ExtResource("4_0cr88")
 
-[node name="Wall" type="CSGBox3D" parent="."]
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
+use_collision = true
+
+[node name="Wall" type="CSGBox3D" parent="CSGCombiner3D"]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -97.5, 11, 0)
 use_collision = true
 size = Vector3(10, 3, 9)
 material = ExtResource("4_0cr88")
 
-[node name="Ledge" type="Area3D" parent="Wall" groups=["ledge"]]
+[node name="Ledge" type="Area3D" parent="CSGCombiner3D/Wall" groups=["ledge"]]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -5, 1.5, 0.5000004)
 collision_layer = 0
 
-[node name="Collider" type="CollisionShape3D" parent="Wall/Ledge"]
+[node name="Collider" type="CollisionShape3D" parent="CSGCombiner3D/Wall/Ledge"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, -0.3, 0)
 shape = SubResource("BoxShape3D_0b4ue")
 
-[node name="Mesh" type="MeshInstance3D" parent="Wall/Ledge"]
+[node name="Mesh" type="MeshInstance3D" parent="CSGCombiner3D/Wall/Ledge"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, -0.05, 0)
 mesh = SubResource("BoxMesh_0b4ue")
 
-[node name="Ledge2" type="Area3D" parent="Wall" groups=["ledge"]]
+[node name="Ledge2" type="Area3D" parent="CSGCombiner3D/Wall" groups=["ledge"]]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -5, 1.5, -0.49999958)
 collision_layer = 0
 
-[node name="Collider" type="CollisionShape3D" parent="Wall/Ledge2"]
+[node name="Collider" type="CollisionShape3D" parent="CSGCombiner3D/Wall/Ledge2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, -0.3, 0)
 shape = SubResource("BoxShape3D_0b4ue")
 
-[node name="Mesh" type="MeshInstance3D" parent="Wall/Ledge2"]
+[node name="Mesh" type="MeshInstance3D" parent="CSGCombiner3D/Wall/Ledge2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, -0.05, 0)
 mesh = SubResource("BoxMesh_0b4ue")
+
+[node name="Wall6" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -100, 15.5, -2.3841858e-07)
+use_collision = true
+size = Vector3(5, 6, 9)
+material = ExtResource("4_0cr88")
+
+[node name="Ledge" type="Area3D" parent="CSGCombiner3D/Wall6" groups=["ledge"]]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -2.5, 3, 0.50000024)
+collision_layer = 0
+
+[node name="Collider" type="CollisionShape3D" parent="CSGCombiner3D/Wall6/Ledge"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, -0.3, 0)
+shape = SubResource("BoxShape3D_0b4ue")
+
+[node name="Mesh" type="MeshInstance3D" parent="CSGCombiner3D/Wall6/Ledge"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, -0.05, 0)
+mesh = SubResource("BoxMesh_0b4ue")
+
+[node name="Ledge2" type="Area3D" parent="CSGCombiner3D/Wall6" groups=["ledge"]]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -2.5, 3, -0.49999976)
+collision_layer = 0
+
+[node name="Collider" type="CollisionShape3D" parent="CSGCombiner3D/Wall6/Ledge2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, -0.3, 0)
+shape = SubResource("BoxShape3D_0b4ue")
+
+[node name="Mesh" type="MeshInstance3D" parent="CSGCombiner3D/Wall6/Ledge2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, -0.05, 0)
+mesh = SubResource("BoxMesh_0b4ue")
+
+[node name="Platform1" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1.3113416e-07, 0, 1, 0, 1, 0, -1, 0, 1.3113416e-07, -108.5, 18, 0)
+use_collision = true
+size = Vector3(3, 1, 12)
+material = ExtResource("4_0cr88")
+
+[node name="Bench" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1.3113416e-07, 0, 1, 0, 1, 0, -1, 0, 1.3113416e-07, -114, 18.75, 0)
+use_collision = true
+size = Vector3(3, 0.5, 1)
+material = ExtResource("4_0cr88")
 
 [node name="Wall7" type="CSGBox3D" parent="."]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -134.5, 18, -4.7683716e-07)
@@ -121,36 +166,6 @@ shape = SubResource("BoxShape3D_0b4ue")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, -0.05, 0)
 mesh = SubResource("BoxMesh_0b4ue")
 
-[node name="Wall6" type="CSGBox3D" parent="."]
-transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -100, 15.5, -2.3841858e-07)
-use_collision = true
-size = Vector3(5, 6, 9)
-material = ExtResource("4_0cr88")
-
-[node name="Ledge" type="Area3D" parent="Wall6" groups=["ledge"]]
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -2.5, 3, 0.50000024)
-collision_layer = 0
-
-[node name="Collider" type="CollisionShape3D" parent="Wall6/Ledge"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, -0.3, 0)
-shape = SubResource("BoxShape3D_0b4ue")
-
-[node name="Mesh" type="MeshInstance3D" parent="Wall6/Ledge"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, -0.05, 0)
-mesh = SubResource("BoxMesh_0b4ue")
-
-[node name="Ledge2" type="Area3D" parent="Wall6" groups=["ledge"]]
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -2.5, 3, -0.49999976)
-collision_layer = 0
-
-[node name="Collider" type="CollisionShape3D" parent="Wall6/Ledge2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, -0.3, 0)
-shape = SubResource("BoxShape3D_0b4ue")
-
-[node name="Mesh" type="MeshInstance3D" parent="Wall6/Ledge2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, -0.05, 0)
-mesh = SubResource("BoxMesh_0b4ue")
-
 [node name="Wall2" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -69, 11.5, 0)
 use_collision = true
@@ -158,9 +173,9 @@ size = Vector3(5, 3, 9)
 material = ExtResource("4_0cr88")
 
 [node name="Wall3" type="CSGBox3D" parent="."]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -65.532295, 19.979023, 4.9736695)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -65.032295, 19.979023, 4.9736695)
 use_collision = true
-size = Vector3(1, 20, 149)
+size = Vector3(1, 20, 150)
 material = ExtResource("4_0cr88")
 
 [node name="Wall4" type="CSGBox3D" parent="."]
@@ -180,18 +195,6 @@ transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -71.
 use_collision = true
 polygon = PackedVector2Array(0, 0, 6, 0, 0, 3)
 depth = 9.0
-material = ExtResource("4_0cr88")
-
-[node name="Platform1" type="CSGBox3D" parent="."]
-transform = Transform3D(1.3113416e-07, 0, 1, 0, 1, 0, -1, 0, 1.3113416e-07, -108.5, 18, 0)
-use_collision = true
-size = Vector3(3, 1, 12)
-material = ExtResource("4_0cr88")
-
-[node name="Bench" type="CSGBox3D" parent="."]
-transform = Transform3D(1.3113416e-07, 0, 1, 0, 1, 0, -1, 0, 1.3113416e-07, -114, 18.75, 0)
-use_collision = true
-size = Vector3(3, 0.5, 1)
 material = ExtResource("4_0cr88")
 
 [node name="Lava" type="Node3D" parent="."]

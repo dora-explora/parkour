@@ -4,7 +4,6 @@ func _ready():
 	$Player/Mesh.visible = false
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	for ledge in get_tree().get_nodes_in_group("ledge"):
-		# print("connecting ", ledge.name)
 		ledge.area_entered.connect($Player.on_ledge_entered.bind(ledge))
 	$Lava/Area.area_entered.connect(on_lava)
 
@@ -15,6 +14,5 @@ func _input(event):
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 
 func on_lava(area: Area3D):
-	print(area.name, " has touched the floor")
-	if area.name == "PlayerArea": # kill the playerf
+	if area.name == "PlayerArea": # kill the player
 		$Player.position = Vector3.ZERO

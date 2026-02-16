@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://ddgh6yne2ds78"
-path="res://.godot/imported/hand.blend-c970d28310136df2a024e73336e7be03.scn"
+uid="uid://c41j7e0dyfodh"
+path="res://.godot/imported/foot.blend-f984373f9d91b5d4220f4a6af1065db4.scn"
 
 [deps]
 
-source_file="res://hand.blend"
-dest_files=["res://.godot/imported/hand.blend-c970d28310136df2a024e73336e7be03.scn"]
+source_file="res://assets/foot.blend"
+dest_files=["res://.godot/imported/foot.blend-f984373f9d91b5d4220f4a6af1065db4.scn"]
 
 [params]
 
@@ -37,19 +37,7 @@ import_script/path=""
 materials/extract=0
 materials/extract_format=0
 materials/extract_path=""
-_subresources={
-"meshes": {
-"hand_Cube": {
-"generate/lightmap_uv": 0,
-"generate/lods": 0,
-"generate/shadow_meshes": 0,
-"lods/normal_merge_angle": 20.0,
-"save_to_file/enabled": true,
-"save_to_file/fallback_path": "hand",
-"save_to_file/path": "uid://dpb117mbva5t7"
-}
-}
-}
+_subresources={}
 blender/nodes/visible=0
 blender/nodes/active_collection_only=false
 blender/nodes/punctual_lights=true

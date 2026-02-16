@@ -1,0 +1,64 @@
+[gd_scene load_steps=5 format=3 uid="uid://bjps00dbunvcl"]
+
+[ext_resource type="Texture2D" uid="uid://7la4u5va5pyd" path="res://assets/menutest.png" id="1_5mbse"]
+[ext_resource type="Script" uid="uid://cg3k03q5e6n7w" path="res://scripts/mainmenu.gd" id="1_natt5"]
+
+[sub_resource type="SystemFont" id="SystemFont_7q3kq"]
+font_weight = 800
+subpixel_positioning = 0
+
+[sub_resource type="LabelSettings" id="LabelSettings_5mbse"]
+font = SubResource("SystemFont_7q3kq")
+font_size = 64
+
+[node name="Panel" type="PanelContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 216.0
+offset_top = 108.0
+offset_right = -168.0
+offset_bottom = -108.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_natt5")
+
+[node name="VBox" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBox"]
+layout_mode = 2
+text = "COIL"
+label_settings = SubResource("LabelSettings_5mbse")
+horizontal_alignment = 1
+
+[node name="HBox" type="HBoxContainer" parent="VBox"]
+custom_minimum_size = Vector2(720, 320)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+
+[node name="TutorialButton" type="Button" parent="VBox/HBox"]
+custom_minimum_size = Vector2(240, 0)
+layout_mode = 2
+text = "Tutorial
+"
+icon = ExtResource("1_5mbse")
+icon_alignment = 1
+expand_icon = true
+
+[node name="LevelButton" type="Button" parent="VBox/HBox"]
+custom_minimum_size = Vector2(240, 0)
+layout_mode = 2
+text = "Level"
+icon = ExtResource("1_5mbse")
+icon_alignment = 1
+expand_icon = true
+
+[node name="OptionsButton" type="Button" parent="VBox/HBox"]
+custom_minimum_size = Vector2(240, 0)
+layout_mode = 2
+text = "Options"
+icon = ExtResource("1_5mbse")
+icon_alignment = 1
+expand_icon = true
