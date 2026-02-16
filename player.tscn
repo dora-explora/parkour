@@ -44,6 +44,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 shape = SubResource("SphereShape3D_4flbx")
 disabled = true
 
+[node name="PlayerArea" type="Area3D" parent="."]
+
+[node name="Collider" type="CollisionShape3D" parent="PlayerArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_4flbx")
+
 [node name="Mesh" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 visible = false
