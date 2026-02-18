@@ -18,6 +18,7 @@ var getup_impulse = 7.
 var ledge_pullstrength = 1000.
 var ledge_movestrength = 800.
 
+var _stopped: bool = false
 var _on_floor: bool = true
 var _moving: bool = false
 var _handsav := [Vector2.ZERO, Vector2.ZERO]
@@ -25,6 +26,7 @@ var _feetav := [Vector2.ZERO, Vector2.ZERO]
 var _grabbings: Array[Area3D] = [null, null]
 
 func _physics_process(delta: float) -> void:
+	if _stopped: return
 	var input_dir := Input.get_vector("left", "right", "forward", "back")
 	var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 
@@ -47,15 +49,18 @@ func _physics_process(delta: float) -> void:
 		$ColliderL.disabled = true
 		$ColliderS.disabled = false
 
-	var shift = Input.is_action_pressed("shift")
 	var lclick = Input.is_action_pressed("lclick")
 	var rclick = Input.is_action_pressed("rclick")
 
-	process_arm(shift && lclick, $LHand, $Camera/FakeLHand, $LedgeLHand, 0, delta)
-	process_arm(shift && rclick, $RHand, $Camera/FakeRHand, $LedgeRHand, 1, delta)
+	#process_arm(shift && lclick, $LHand, $Camera/FakeLHand, $LedgeLHand, 0, delta)
+	#process_arm(shift && rclick, $RHand, $Camera/FakeRHand, $LedgeRHand, 1, delta)
+	process_arm(rclick, $LHand, $Camera/FakeLHand, $LedgeLHand, 0, delta)
+	process_arm(rclick, $RHand, $Camera/FakeRHand, $LedgeRHand, 1, delta)
 
-	process_leg(not shift && lclick, input_dir.y, $LFoot, $FakeLFoot, 0, delta)
-	process_leg(not shift && rclick, input_dir.y, $RFoot, $FakeRFoot, 1, delta)
+	#process_leg(not shift && lclick, input_dir.y, $LFoot, $FakeLFoot, 0, delta)
+	#process_leg(not shift && rclick, input_dir.y, $RFoot, $FakeRFoot, 1, delta)
+	process_leg(lclick, input_dir.y, $LFoot, $FakeLFoot, 0, delta)
+	process_leg(lclick, input_dir.y, $RFoot, $FakeRFoot, 1, delta)
 
 func process_arm(held: bool, hand: Node3D, fake: Node3D, ledgehand: Node3D, index: int, delta: float):
 	if _grabbings[index]:
@@ -195,6 +200,7 @@ func leg_pushback(foot: Node, gp: bool, index: int, delta: float):
 	apply_central_force(pbstrength * pbdir * delta)
 
 func _on_timer_timeout():
+	if _stopped: return
 	if _moving && _on_floor:
 		apply_central_impulse(Vector3.UP * getup_impulse)
 		_moving = false
@@ -202,17 +208,16 @@ func _on_timer_timeout():
 		$ColliderS.disabled = true
 
 func _input(event):
+	if _stopped: return
 	if event is InputEventMouseMotion && Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 		apply_torque_impulse(Vector3(0, -event.relative.x * h_sens, 0))
 		$Camera.rotate_x(-event.relative.y * v_sens)
 		$Camera.rotation.x = clampf($Camera.rotation.x, -deg_to_rad(80), deg_to_rad(70))
-	if event.is_action("lclick") && Input.is_action_pressed("shift"):
+	if event.is_action("rclick"):
 		arm_posrot_snap($LHand)
-	if event.is_action("rclick") && Input.is_action_pressed("shift"):
 		arm_posrot_snap($RHand)
-	if event.is_action("lclick") && !Input.is_action_pressed("shift"):
+	if event.is_action("lclick"):
 		leg_posrot_snap($LFoot)
-	if event.is_action("rclick") && !Input.is_action_pressed("shift"):
 		leg_posrot_snap($RFoot)
 
 func _integrate_forces(state: PhysicsDirectBodyState3D):

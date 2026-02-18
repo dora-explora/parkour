@@ -1,26 +1,46 @@
-[gd_scene load_steps=12 format=3 uid="uid://ua8i7vaqu7ph"]
+[gd_scene load_steps=19 format=3 uid="uid://ua8i7vaqu7ph"]
 
 [ext_resource type="Script" uid="uid://d2724rhkmy082" path="res://scripts/level.gd" id="1_v38iq"]
 [ext_resource type="PackedScene" uid="uid://bdaau0vqxi26q" path="res://scenes/player.tscn" id="2_v8kj3"]
-[ext_resource type="Shader" uid="uid://bsfe7316tp74" path="res://assets/sky.gdshader" id="3_crycw"]
 [ext_resource type="Material" uid="uid://dofqt1d4r510w" path="res://assets/default.tres" id="4_i2041"]
 
+[sub_resource type="Shader" id="Shader_m7ahb"]
+code = "shader_type sky;
+
+void sky() {
+	COLOR = vec3(0.1, 0.2, 0.8);
+}
+"
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_2nifc"]
-shader = ExtResource("3_crycw")
+shader = SubResource("Shader_m7ahb")
 
 [sub_resource type="Sky" id="Sky_wkftn"]
 sky_material = SubResource("ShaderMaterial_2nifc")
 
 [sub_resource type="Environment" id="Environment_q4iis"]
-background_mode = 2
+background_mode = 1
+background_color = Color(0.2, 0.06333333, 0.036000002, 1)
 sky = SubResource("Sky_wkftn")
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_v38iq"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_m7ahb"]
+albedo_color = Color(1.325, 0.911, 0, 1)
+
 [sub_resource type="PlaneMesh" id="PlaneMesh_v38iq"]
+material = SubResource("StandardMaterial3D_m7ahb")
 size = Vector2(10000, 10000)
-subdivide_width = 100
-subdivide_depth = 100
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_dwgg1"]
+size = Vector3(1, 4, 4)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dwgg1"]
+albedo_color = Color(0, 1.396, 0.036, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_dwgg1"]
+material = SubResource("StandardMaterial3D_dwgg1")
+size = Vector3(0.1, 0.1, 0.1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_0b4ue"]
 size = Vector3(0.5, 0.6, 1)
@@ -28,19 +48,95 @@ size = Vector3(0.5, 0.6, 1)
 [sub_resource type="BoxMesh" id="BoxMesh_0b4ue"]
 size = Vector3(0.1, 0.1, 0.7)
 
+[sub_resource type="LabelSettings" id="LabelSettings_dwgg1"]
+font_size = 64
+
+[sub_resource type="LabelSettings" id="LabelSettings_ru4tf"]
+font_size = 64
+
+[sub_resource type="LabelSettings" id="LabelSettings_6sh32"]
+font_size = 64
+
 [node name="level" type="Node3D"]
 script = ExtResource("1_v38iq")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 33.96306, 0)
+[node name="SkyLight" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 10, 0)
+light_color = Color(0.38860005, 0.54337007, 0.67, 1)
 light_energy = 0.5
 shadow_enabled = true
+sky_mode = 1
 
 [node name="Player" parent="." instance=ExtResource("2_v8kj3")]
 top_level = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_q4iis")
+
+[node name="LavaLights" type="Node3D" parent="."]
+
+[node name="LavaLight" type="SpotLight3D" parent="LavaLights"]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, -21, 0)
+light_color = Color(0.92, 0.6348, 0.3496, 1)
+light_energy = 10.0
+light_size = 15.0
+light_bake_mode = 1
+spot_range = 50.0
+spot_angle = 89.99
+
+[node name="LavaLight2" type="SpotLight3D" parent="LavaLights"]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, -21, -25)
+light_color = Color(0.92, 0.6348, 0.3496, 1)
+light_energy = 10.0
+light_size = 15.0
+light_bake_mode = 1
+spot_range = 50.0
+spot_angle = 89.99
+
+[node name="LavaLight3" type="SpotLight3D" parent="LavaLights"]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, -21, -50)
+light_color = Color(0.92, 0.6348, 0.3496, 1)
+light_energy = 10.0
+light_size = 15.0
+light_bake_mode = 1
+spot_range = 50.0
+spot_angle = 89.99
+
+[node name="LavaLight4" type="SpotLight3D" parent="LavaLights"]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, -21, -75)
+light_color = Color(0.92, 0.6348, 0.3496, 1)
+light_energy = 10.0
+light_size = 15.0
+light_bake_mode = 1
+spot_range = 50.0
+spot_angle = 89.99
+
+[node name="LavaLight5" type="SpotLight3D" parent="LavaLights"]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, -10, -21, -85)
+light_color = Color(0.92, 0.6348, 0.3496, 1)
+light_energy = 10.0
+light_size = 15.0
+light_bake_mode = 1
+spot_range = 50.0
+spot_angle = 89.99
+
+[node name="LavaLight6" type="SpotLight3D" parent="LavaLights"]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, -35, -21, -85)
+light_color = Color(0.92, 0.6348, 0.3496, 1)
+light_energy = 10.0
+light_size = 15.0
+light_bake_mode = 1
+spot_range = 50.0
+spot_angle = 89.99
+
+[node name="LavaLight7" type="SpotLight3D" parent="LavaLights"]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, -60, -21, -85)
+light_color = Color(0.92, 0.6348, 0.3496, 1)
+light_energy = 10.0
+light_size = 15.0
+light_bake_mode = 1
+spot_range = 50.0
+spot_angle = 89.99
 
 [node name="Lava" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -22, 0)
@@ -58,6 +154,25 @@ shape = SubResource("WorldBoundaryShape3D_v38iq")
 
 [node name="Mesh" type="MeshInstance3D" parent="Lava"]
 mesh = SubResource("PlaneMesh_v38iq")
+
+[node name="Win" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -65.5, -14, -85.5)
+
+[node name="Area" type="Area3D" parent="Win"]
+
+[node name="Collider" type="CollisionShape3D" parent="Win/Area"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+shape = SubResource("BoxShape3D_dwgg1")
+
+[node name="Particles" type="CPUParticles3D" parent="Win"]
+amount = 100
+lifetime = 0.5
+randomness = 1.0
+mesh = SubResource("BoxMesh_dwgg1")
+emission_shape = 3
+emission_box_extents = Vector3(1, 2, 2)
+emission_colors = PackedColorArray(0.3019608, 1, 0.41568628, 1)
+gravity = Vector3(-5, 0, 0)
 
 [node name="Platform1" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3, -3.5)
@@ -192,46 +307,46 @@ use_collision = true
 size = Vector3(7, 1, 6)
 material = ExtResource("4_i2041")
 
-[node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
+[node name="Ramp" type="CSGCombiner3D" parent="."]
 use_collision = true
 
-[node name="Platform9" type="CSGBox3D" parent="CSGCombiner3D"]
+[node name="Platform9" type="CSGBox3D" parent="Ramp"]
 transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, -25, -6, -85.5)
 use_collision = true
 size = Vector3(3, 1, 4)
 material = ExtResource("4_i2041")
 
-[node name="Platform10" type="CSGBox3D" parent="CSGCombiner3D"]
+[node name="Platform10" type="CSGBox3D" parent="Ramp"]
 transform = Transform3D(0.258819, -0.9659258, 0, 0.9659258, 0.258819, 0, 0, 0, 1, -25.394728, -8.90299, -85.5)
 use_collision = true
 size = Vector3(3, 1, 4)
 material = ExtResource("4_i2041")
 
-[node name="Platform11" type="CSGBox3D" parent="CSGCombiner3D"]
+[node name="Platform11" type="CSGBox3D" parent="Ramp"]
 transform = Transform3D(0.49999997, -0.8660254, 0, 0.8660254, 0.49999997, 0, 0, 0, 1, -26.52115, -11.610711, -85.5)
 use_collision = true
 size = Vector3(3, 1, 4)
 material = ExtResource("4_i2041")
 
-[node name="Platform12" type="CSGBox3D" parent="CSGCombiner3D"]
+[node name="Platform12" type="CSGBox3D" parent="Ramp"]
 transform = Transform3D(0.7071067, -0.70710677, 0, 0.70710677, 0.7071067, 0, 0, 0, 1, -28.305113, -13.897151, -85.5)
 use_collision = true
 size = Vector3(3, 1, 4)
 material = ExtResource("4_i2041")
 
-[node name="Platform13" type="CSGBox3D" parent="CSGCombiner3D"]
+[node name="Platform13" type="CSGBox3D" parent="Ramp"]
 transform = Transform3D(0.86602527, -0.5, 0, 0.5, 0.86602527, 0, 0, 0, 1, -30.629015, -15.663544, -85.5)
 use_collision = true
 size = Vector3(3, 1, 4)
 material = ExtResource("4_i2041")
 
-[node name="Platform14" type="CSGBox3D" parent="CSGCombiner3D"]
+[node name="Platform14" type="CSGBox3D" parent="Ramp"]
 transform = Transform3D(0.9659257, -0.25881907, 0, 0.25881907, 0.9659257, 0, 0, 0, 1, -33.12588, -16.640774, -85.5)
 use_collision = true
 size = Vector3(3, 1, 4)
 material = ExtResource("4_i2041")
 
-[node name="Platform15" type="CSGBox3D" parent="CSGCombiner3D"]
+[node name="Platform15" type="CSGBox3D" parent="Ramp"]
 transform = Transform3D(0.9999999, -5.9604645e-08, 0, 5.9604645e-08, 0.9999999, 0, 0, 0, 1, -36, -17, -85.5)
 use_collision = true
 size = Vector3(3, 1, 4)
@@ -266,3 +381,170 @@ shape = SubResource("BoxShape3D_0b4ue")
 [node name="Mesh" type="MeshInstance3D" parent="Platform16/Ledge2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, -0.05, 0)
 mesh = SubResource("BoxMesh_0b4ue")
+
+[node name="DeathScreen" type="PanelContainer" parent="."]
+visible = false
+top_level = true
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="DeathScreen"]
+custom_minimum_size = Vector2(1002, 498)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="DeathScreen/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="DeathScreen/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "You died!!!!"
+label_settings = SubResource("LabelSettings_dwgg1")
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="DeathScreen/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "L"
+horizontal_alignment = 1
+
+[node name="Container" type="Container" parent="DeathScreen/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="DeathScreen/MarginContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Margin1" type="MarginContainer" parent="DeathScreen/MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 50)
+layout_mode = 2
+
+[node name="RetryButton" type="Button" parent="DeathScreen/MarginContainer/VBoxContainer/HBoxContainer/Margin1"]
+layout_mode = 2
+text = "Retry"
+
+[node name="Margin2" type="MarginContainer" parent="DeathScreen/MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 50)
+layout_mode = 2
+
+[node name="ExitButton" type="Button" parent="DeathScreen/MarginContainer/VBoxContainer/HBoxContainer/Margin2"]
+layout_mode = 2
+text = "Exit"
+
+[node name="WinScreen" type="PanelContainer" parent="."]
+visible = false
+top_level = true
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="WinScreen"]
+custom_minimum_size = Vector2(1002, 498)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="WinScreen/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="WinScreen/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "You won!"
+label_settings = SubResource("LabelSettings_ru4tf")
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="WinScreen/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "yay"
+horizontal_alignment = 1
+
+[node name="Container" type="Container" parent="WinScreen/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+
+[node name="Margin" type="MarginContainer" parent="WinScreen/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(100, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="ExitButton" type="Button" parent="WinScreen/MarginContainer/VBoxContainer/Margin"]
+layout_mode = 2
+text = "Exit"
+
+[node name="EscScreen" type="PanelContainer" parent="."]
+visible = false
+top_level = true
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="EscScreen"]
+custom_minimum_size = Vector2(1002, 498)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="EscScreen/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="EscScreen/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Paused"
+label_settings = SubResource("LabelSettings_dwgg1")
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="EscScreen/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "you should consider drinking water"
+horizontal_alignment = 1
+
+[node name="Container" type="Container" parent="EscScreen/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="EscScreen/MarginContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Margin1" type="MarginContainer" parent="EscScreen/MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 50)
+layout_mode = 2
+
+[node name="RetryButton" type="Button" parent="EscScreen/MarginContainer/VBoxContainer/HBoxContainer/Margin1"]
+layout_mode = 2
+text = "Retry"
+
+[node name="Margin2" type="MarginContainer" parent="EscScreen/MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 50)
+layout_mode = 2
+
+[node name="ExitButton" type="Button" parent="EscScreen/MarginContainer/VBoxContainer/HBoxContainer/Margin2"]
+layout_mode = 2
+text = "Exit"
+
+[node name="Margin3" type="MarginContainer" parent="EscScreen/MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 50)
+layout_mode = 2
+
+[node name="ReturnButton" type="Button" parent="EscScreen/MarginContainer/VBoxContainer/HBoxContainer/Margin3"]
+layout_mode = 2
+text = "Return"
+
+[node name="TimeLabel" type="Label" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 23.0
+grow_horizontal = 2
+label_settings = SubResource("LabelSettings_6sh32")
+horizontal_alignment = 1

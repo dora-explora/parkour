@@ -1,18 +1,18 @@
-[gd_scene load_steps=12 format=3 uid="uid://vpsjcfexefcv"]
+[gd_scene load_steps=11 format=3 uid="uid://vpsjcfexefcv"]
 
 [ext_resource type="Script" uid="uid://d2724rhkmy082" path="res://scripts/level.gd" id="1_kx2s4"]
 [ext_resource type="PackedScene" uid="uid://bdaau0vqxi26q" path="res://scenes/player.tscn" id="2_b5yu0"]
-[ext_resource type="Shader" uid="uid://bsfe7316tp74" path="res://assets/sky.gdshader" id="3_8ws1j"]
 [ext_resource type="Material" uid="uid://dofqt1d4r510w" path="res://assets/default.tres" id="4_vfacy"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_2nifc"]
-shader = ExtResource("3_8ws1j")
 
 [sub_resource type="Sky" id="Sky_wkftn"]
 sky_material = SubResource("ShaderMaterial_2nifc")
 
 [sub_resource type="Environment" id="Environment_q4iis"]
-background_mode = 2
+background_mode = 1
+background_color = Color(0.1496, 0.1813333, 0.34, 1)
+background_energy_multiplier = 0.4
 sky = SubResource("Sky_wkftn")
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_oi3di"]
