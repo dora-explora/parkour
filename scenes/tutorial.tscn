@@ -1,8 +1,10 @@
-[gd_scene load_steps=19 format=3 uid="uid://btueriwkwx0fx"]
+[gd_scene load_steps=23 format=3 uid="uid://btueriwkwx0fx"]
 
 [ext_resource type="Script" uid="uid://d2724rhkmy082" path="res://scripts/level.gd" id="1_5mrt3"]
 [ext_resource type="PackedScene" uid="uid://bdaau0vqxi26q" path="res://scenes/player.tscn" id="2_rwowx"]
+[ext_resource type="Texture2D" uid="uid://cl7aiq3vvyefq" path="res://assets/floor.png" id="3_cq4me"]
 [ext_resource type="Material" uid="uid://dofqt1d4r510w" path="res://assets/default.tres" id="4_0cr88"]
+[ext_resource type="Material" uid="uid://d3nohflrjq8ak" path="res://assets/ledge.tres" id="4_4kmhl"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_2nifc"]
 
@@ -11,6 +13,7 @@ sky_material = SubResource("ShaderMaterial_2nifc")
 
 [sub_resource type="Environment" id="Environment_q4iis"]
 background_mode = 1
+background_color = Color(0.17325616, 0.145073, 0.10272177, 1)
 sky = SubResource("Sky_wkftn")
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_oi3di"]
@@ -18,10 +21,19 @@ sky = SubResource("Sky_wkftn")
 [sub_resource type="PlaneMesh" id="PlaneMesh_oi3di"]
 size = Vector2(150, 10)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6yjpi"]
+albedo_texture = ExtResource("3_cq4me")
+metallic = 0.9
+uv1_triplanar = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4kmhl"]
+albedo_color = Color(0, 0, 0, 1)
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_0b4ue"]
 size = Vector3(0.2, 0.6, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_0b4ue"]
+material = ExtResource("4_4kmhl")
 size = Vector3(0.1, 0.1, 0.7)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ph3nu"]
@@ -68,13 +80,13 @@ shape = SubResource("WorldBoundaryShape3D_oi3di")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -64.99982, 0.01613903, -0.02259326)
 mesh = SubResource("PlaneMesh_oi3di")
 skeleton = NodePath("../..")
-surface_material_override/0 = ExtResource("4_0cr88")
+surface_material_override/0 = SubResource("StandardMaterial3D_6yjpi")
 
 [node name="Roof" type="CSGBox3D" parent="."]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -65.032295, 20.479023, -0.026330471)
 use_collision = true
 size = Vector3(9, 1, 150)
-material = ExtResource("4_0cr88")
+material = SubResource("StandardMaterial3D_4kmhl")
 
 [node name="Walls" type="CSGCombiner3D" parent="."]
 use_collision = true
@@ -160,7 +172,7 @@ transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -2.5
 collision_layer = 0
 
 [node name="Collider" type="CollisionShape3D" parent="LastObstacle/Wall6/Ledge2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, -0.3, 0)
+transform = Transform3D(1, 0, 0, 0, 0.9999981, -0.0019547676, 0, 0.0019547676, 0.9999981, 0.099998474, -0.3000002, 0)
 shape = SubResource("BoxShape3D_0b4ue")
 
 [node name="Mesh" type="MeshInstance3D" parent="LastObstacle/Wall6/Ledge2"]
@@ -171,12 +183,6 @@ mesh = SubResource("BoxMesh_0b4ue")
 transform = Transform3D(1.3113416e-07, 0, 1, 0, 1, 0, -1, 0, 1.3113416e-07, -108.5, 18, 0)
 use_collision = true
 size = Vector3(3, 1, 12)
-material = ExtResource("4_0cr88")
-
-[node name="Bench" type="CSGBox3D" parent="LastObstacle"]
-transform = Transform3D(1.3113416e-07, 0, 1, 0, 1, 0, -1, 0, 1.3113416e-07, -114, 18.75, 0)
-use_collision = true
-size = Vector3(3, 0.5, 1)
 material = ExtResource("4_0cr88")
 
 [node name="Ladder1" type="Node3D" parent="."]
@@ -280,13 +286,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, -0.05, 0)
 mesh = SubResource("BoxMesh_0b4ue")
 
 [node name="Platform" type="CSGBox3D" parent="."]
-transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -134.5, 8, -4.7683716e-07)
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -134, 8, -4.3312576e-07)
 use_collision = true
-size = Vector3(10, 1, 3)
+size = Vector3(11, 1, 3)
 material = ExtResource("4_0cr88")
 
 [node name="Ledge" type="Area3D" parent="Platform" groups=["ledge"]]
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -5, 0.5, 0.5000004)
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -5.5, 0.5, 0.50000054)
 collision_layer = 0
 
 [node name="Collider" type="CollisionShape3D" parent="Platform/Ledge"]
@@ -298,7 +304,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, -0.05, 0)
 mesh = SubResource("BoxMesh_0b4ue")
 
 [node name="Ledge2" type="Area3D" parent="Platform" groups=["ledge"]]
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -5, 0.5, -0.49999955)
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -5.5, 0.5, -0.49999943)
 collision_layer = 0
 
 [node name="Collider" type="CollisionShape3D" parent="Platform/Ledge2"]
@@ -330,58 +336,74 @@ material = ExtResource("4_0cr88")
 [node name="Light1" type="OmniLight3D" parent="Lights"]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -10, 20, 0)
 light_color = Color(1, 0.97783333, 0.81, 1)
+light_energy = 3.0
 light_bake_mode = 0
 shadow_enabled = true
 omni_range = 40.0
+omni_attenuation = 0.6
 
 [node name="Light2" type="OmniLight3D" parent="Lights"]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -30, 20, 0)
 light_color = Color(1, 0.97783333, 0.81, 1)
+light_energy = 3.0
 light_bake_mode = 0
 shadow_enabled = true
 omni_range = 40.0
+omni_attenuation = 0.6
 
 [node name="Light3" type="OmniLight3D" parent="Lights"]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -50, 20, 0)
 light_color = Color(1, 0.97783333, 0.81, 1)
+light_energy = 3.0
 light_bake_mode = 0
 shadow_enabled = true
 omni_range = 40.0
+omni_attenuation = 0.6
 
 [node name="Light4" type="OmniLight3D" parent="Lights"]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -70, 20, 0)
 light_color = Color(1, 0.97783333, 0.81, 1)
+light_energy = 3.0
 light_bake_mode = 0
 shadow_enabled = true
 omni_range = 40.0
+omni_attenuation = 0.6
 
 [node name="Light5" type="OmniLight3D" parent="Lights"]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -90, 20, 0)
 light_color = Color(1, 0.97783333, 0.81, 1)
+light_energy = 3.0
 light_bake_mode = 0
 shadow_enabled = true
 omni_range = 40.0
+omni_attenuation = 0.6
 
 [node name="Light6" type="OmniLight3D" parent="Lights"]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -110, 20, 0)
 light_color = Color(1, 0.97783333, 0.81, 1)
+light_energy = 3.0
 light_bake_mode = 0
 shadow_enabled = true
 omni_range = 40.0
+omni_attenuation = 0.6
 
 [node name="Light7" type="OmniLight3D" parent="Lights"]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -130, 20, 0)
 light_color = Color(1, 0.97783333, 0.81, 1)
+light_energy = 3.0
 light_bake_mode = 0
 shadow_enabled = true
 omni_range = 40.0
+omni_attenuation = 0.6
 
 [node name="Light8" type="OmniLight3D" parent="Lights"]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 5, 20, 0)
 light_color = Color(1, 0.97783333, 0.81, 1)
+light_energy = 3.0
 light_bake_mode = 0
 shadow_enabled = true
 omni_range = 40.0
+omni_attenuation = 0.6
 
 [node name="Lava" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -22, 0)
@@ -437,7 +459,10 @@ pixel_size = 0.01
 double_sided = false
 text = "When you hop or dive, you will start MOVING.
 Once you're moving, you can start using your legs!
-Try holding left click while moving."
+Try holding left click while moving.
+
+When your legs are out, they'll stay at the bottom of
+the screen. Looking up or down will move your legs too."
 font = SubResource("SystemFont_5mrt3")
 text_direction = 1
 
@@ -455,8 +480,8 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -64,
 pixel_size = 0.01
 double_sided = false
 modulate = Color(0.8151948, 0.81519485, 0.81519485, 1)
-text = "Try hitting the floor before jumping to get 
-the most out of your legs."
+text = "Tip: Look down and wait to hit the floor 
+before clicking to get the most out of your legs."
 font = SubResource("SystemFont_5mrt3")
 text_direction = 1
 
@@ -481,8 +506,8 @@ to your hands to grab them and pull up!
 
 One last tip before the final jump: 
 If you move your feet backwards while jumping 
-forwards, you'll KICK. Combine diving, jumping, 
-kicking, and grabbing to finish the tutorial!"
+forwards, you'll get a speed boost. Combine that with 
+diving, jumping, and grabbing to finish the tutorial!"
 font = SubResource("SystemFont_5mrt3")
 text_direction = 1
 

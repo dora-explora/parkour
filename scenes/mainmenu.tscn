@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://bjps00dbunvcl"]
+[gd_scene load_steps=6 format=3 uid="uid://bjps00dbunvcl"]
 
-[ext_resource type="Texture2D" uid="uid://7la4u5va5pyd" path="res://assets/menutest.png" id="1_5mbse"]
 [ext_resource type="Script" uid="uid://cg3k03q5e6n7w" path="res://scripts/mainmenu.gd" id="1_natt5"]
+[ext_resource type="Texture2D" uid="uid://cq4wpbuxxgh7p" path="res://assets/tutorial.png" id="2_3vvtq"]
+[ext_resource type="Texture2D" uid="uid://b8qdhk08bust7" path="res://assets/level.png" id="2_r3g3c"]
 
 [sub_resource type="SystemFont" id="SystemFont_7q3kq"]
 font_weight = 800
@@ -41,9 +42,8 @@ size_flags_vertical = 0
 [node name="TutorialButton" type="Button" parent="VBox/HBox"]
 custom_minimum_size = Vector2(240, 0)
 layout_mode = 2
-text = "Tutorial
-"
-icon = ExtResource("1_5mbse")
+text = "Tutorial"
+icon = ExtResource("2_3vvtq")
 icon_alignment = 1
 expand_icon = true
 
@@ -51,14 +51,13 @@ expand_icon = true
 custom_minimum_size = Vector2(240, 0)
 layout_mode = 2
 text = "Level"
-icon = ExtResource("1_5mbse")
+icon = ExtResource("2_r3g3c")
 icon_alignment = 1
 expand_icon = true
 
-[node name="OptionsButton" type="Button" parent="VBox/HBox"]
+[node name="QuitButton" type="Button" parent="VBox/HBox"]
 custom_minimum_size = Vector2(240, 0)
 layout_mode = 2
-text = "Options"
-icon = ExtResource("1_5mbse")
+text = "Quit"
 icon_alignment = 1
 expand_icon = true

@@ -1,7 +1,8 @@
-[gd_scene load_steps=19 format=3 uid="uid://ua8i7vaqu7ph"]
+[gd_scene load_steps=20 format=3 uid="uid://ua8i7vaqu7ph"]
 
 [ext_resource type="Script" uid="uid://d2724rhkmy082" path="res://scripts/level.gd" id="1_v38iq"]
 [ext_resource type="PackedScene" uid="uid://bdaau0vqxi26q" path="res://scenes/player.tscn" id="2_v8kj3"]
+[ext_resource type="Material" uid="uid://d3nohflrjq8ak" path="res://assets/ledge.tres" id="4_dwgg1"]
 [ext_resource type="Material" uid="uid://dofqt1d4r510w" path="res://assets/default.tres" id="4_i2041"]
 
 [sub_resource type="Shader" id="Shader_m7ahb"]
@@ -26,7 +27,10 @@ sky = SubResource("Sky_wkftn")
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_v38iq"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_m7ahb"]
-albedo_color = Color(1.325, 0.911, 0, 1)
+albedo_color = Color(1, 0.68333334, 0, 1)
+emission_enabled = true
+emission = Color(1, 0.28750002, 0.050000012, 1)
+emission_energy_multiplier = 0.6
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_v38iq"]
 material = SubResource("StandardMaterial3D_m7ahb")
@@ -46,6 +50,7 @@ size = Vector3(0.1, 0.1, 0.1)
 size = Vector3(0.5, 0.6, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_0b4ue"]
+material = ExtResource("4_dwgg1")
 size = Vector3(0.1, 0.1, 0.7)
 
 [sub_resource type="LabelSettings" id="LabelSettings_dwgg1"]
@@ -63,7 +68,7 @@ script = ExtResource("1_v38iq")
 [node name="SkyLight" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 10, 0)
 light_color = Color(0.38860005, 0.54337007, 0.67, 1)
-light_energy = 0.5
+light_energy = 2.0
 shadow_enabled = true
 sky_mode = 1
 
@@ -78,65 +83,65 @@ environment = SubResource("Environment_q4iis")
 [node name="LavaLight" type="SpotLight3D" parent="LavaLights"]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, -21, 0)
 light_color = Color(0.92, 0.6348, 0.3496, 1)
-light_energy = 10.0
+light_energy = 100.0
 light_size = 15.0
 light_bake_mode = 1
 spot_range = 50.0
-spot_angle = 89.99
+spot_angle = 90.0
 
 [node name="LavaLight2" type="SpotLight3D" parent="LavaLights"]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, -21, -25)
 light_color = Color(0.92, 0.6348, 0.3496, 1)
-light_energy = 10.0
+light_energy = 100.0
 light_size = 15.0
 light_bake_mode = 1
 spot_range = 50.0
-spot_angle = 89.99
+spot_angle = 90.0
 
 [node name="LavaLight3" type="SpotLight3D" parent="LavaLights"]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, -21, -50)
 light_color = Color(0.92, 0.6348, 0.3496, 1)
-light_energy = 10.0
+light_energy = 100.0
 light_size = 15.0
 light_bake_mode = 1
 spot_range = 50.0
-spot_angle = 89.99
+spot_angle = 90.0
 
 [node name="LavaLight4" type="SpotLight3D" parent="LavaLights"]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, -21, -75)
 light_color = Color(0.92, 0.6348, 0.3496, 1)
-light_energy = 10.0
+light_energy = 100.0
 light_size = 15.0
 light_bake_mode = 1
 spot_range = 50.0
-spot_angle = 89.99
+spot_angle = 90.0
 
 [node name="LavaLight5" type="SpotLight3D" parent="LavaLights"]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, -10, -21, -85)
 light_color = Color(0.92, 0.6348, 0.3496, 1)
-light_energy = 10.0
+light_energy = 100.0
 light_size = 15.0
 light_bake_mode = 1
 spot_range = 50.0
-spot_angle = 89.99
+spot_angle = 90.0
 
 [node name="LavaLight6" type="SpotLight3D" parent="LavaLights"]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, -35, -21, -85)
 light_color = Color(0.92, 0.6348, 0.3496, 1)
-light_energy = 10.0
+light_energy = 100.0
 light_size = 15.0
 light_bake_mode = 1
 spot_range = 50.0
-spot_angle = 89.99
+spot_angle = 90.0
 
 [node name="LavaLight7" type="SpotLight3D" parent="LavaLights"]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, -60, -21, -85)
 light_color = Color(0.92, 0.6348, 0.3496, 1)
-light_energy = 10.0
+light_energy = 100.0
 light_size = 15.0
 light_bake_mode = 1
 spot_range = 50.0
-spot_angle = 89.99
+spot_angle = 90.0
 
 [node name="Lava" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -22, 0)

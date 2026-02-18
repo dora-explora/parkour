@@ -3,6 +3,7 @@
 /android/
 
 addons/
+*.aseprite
 
 *.mtl
 *.blend1*

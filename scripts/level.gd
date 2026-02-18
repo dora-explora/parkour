@@ -5,6 +5,7 @@ var _stopwatch = 0.;
 
 func _ready():
 	$Player/Mesh.visible = false
+	Input.use_accumulated_input = false
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	for ledge in get_tree().get_nodes_in_group("ledge"):
 		ledge.area_entered.connect($Player.on_ledge_entered.bind(ledge))
@@ -70,11 +71,12 @@ func on_retry_pressed():
 	_stopwatch = 0.
 	Engine.time_scale = 1.
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-	$Player.linear_velocity = Vector3.ZERO
 	$Player._moving = false
 	$Player/ColliderL.disabled = false
 	$Player/ColliderS.disabled = true
-	PhysicsServer3D.body_set_state($Player.get_rid(), PhysicsServer3D.BODY_STATE_TRANSFORM, Transform3D.IDENTITY.translated(Vector3.ZERO))
+	$Player/Camera.rotation.x = 0.
+	PhysicsServer3D.body_set_state($Player.get_rid(), PhysicsServer3D.BODY_STATE_TRANSFORM, Transform3D.IDENTITY)
+	PhysicsServer3D.body_set_state($Player.get_rid(), PhysicsServer3D.BODY_STATE_LINEAR_VELOCITY, Vector3.ZERO)
 	$Player._stopped = false
 
 func on_exit_pressed():
