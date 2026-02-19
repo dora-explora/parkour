@@ -14,7 +14,7 @@ var pushback = 0.
 var v_pushback = 0.
 var foot_pushback = 1000.
 var arm_min = 30.
-var getup_impulse = 7.
+var getup_impulse = 3.
 var ledge_pullstrength = 1000.
 var ledge_movestrength = 800.
 
@@ -152,11 +152,14 @@ func during_ledge(ledge: Area3D, delta: float):
 func process_leg(held: bool, forward: float, foot: Node3D, fake: Node3D, index: int, delta: float):
 	if held && _moving:
 		leg_posrot(foot, index, delta)
-		var lookingatwall = false
-		if $Camera/RayCast3D.is_colliding():
+		var glitched = false
+		if $Camera/RayCast3D.is_colliding() && forward == -1.:
 			if $Camera/RayCast3D.get_collision_normal().y < 0.5:
-				lookingatwall = true
-		leg_pushback(foot, forward != 1. && lookingatwall, index, delta)
+				glitched = true
+		if $Camera/RayCast3D2.is_colliding() && (forward == 1. || $Camera.rotation.x < -0.88):
+			if $Camera/RayCast3D2.get_collision_normal().y < 0.5:
+				glitched = true
+		leg_pushback(foot, glitched, index, delta)
 		foot.visible = true
 		fake.visible = false
 	else:
@@ -187,21 +190,23 @@ func leg_posrot_snap(foot: Node3D):
 	var error = $Camera.rotation.x - leg.rotation.x + 3*PI/4
 	leg.rotate_x(error)
 
-func leg_pushback(foot: Node, gp: bool, index: int, delta: float):
+func leg_pushback(foot: Node, glitched: bool, index: int, delta: float):
 	var leg = foot.get_node("Leg")
 	var length = (leg.get_length() - leg.get_hit_length()) / leg.get_length()
 	var pbstrength = 1000. * pow(length, 0.3)
-	var xkick = .5 - _feetav[index].x
+	var xkick = max(.5 - _feetav[index].x, 0)
 	var xdir = sin(leg.rotation.x - PI/2) * sin(rotation.y) * xkick
 	var ydir = cos(leg.rotation.x - PI/2) * 2.
 	var zdir = sin(leg.rotation.x - PI/2) * cos(rotation.y) * xkick
-	if gp: ydir /= 5.	# stands for glitch protection btw
+	if glitched: ydir /= 5.
 	var pbdir = Vector3(xdir, ydir, zdir)
 	apply_central_force(pbstrength * pbdir * delta)
 
 func _on_timer_timeout():
 	if _stopped: return
 	if _moving && _on_floor:
+		PhysicsServer3D.body_set_state(get_rid(), PhysicsServer3D.BODY_STATE_TRANSFORM, transform.translated(Vector3.UP))
+		PhysicsServer3D.body_set_state(get_rid(), PhysicsServer3D.BODY_STATE_LINEAR_VELOCITY, Vector3.ZERO)
 		apply_central_impulse(Vector3.UP * getup_impulse)
 		_moving = false
 		$ColliderL.disabled = false

@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bdaau0vqxi26q"]
+[gd_scene load_steps=15 format=3 uid="uid://bdaau0vqxi26q"]
 
 [ext_resource type="Script" uid="uid://cp1fcutnw7ivn" path="res://scripts/player.gd" id="1_4flbx"]
 [ext_resource type="ArrayMesh" uid="uid://t3ua3nc7d7y1" path="res://assets/hand.obj" id="2_onrkg"]
@@ -17,11 +17,20 @@ margin = 0.1
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_onrkg"]
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_qlg0r"]
+size = Vector3(0.4, 0.5, 0.1)
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_4flbx"]
 size = Vector3(0.5, 0.5, 0.5)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_onrkg"]
 size = Vector3(0.4, 0.5, 0.2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_tuyoq"]
+size = Vector3(0.2, 0.4, 0.1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_fjrip"]
+size = Vector3(0.2, 0.4, 0.1)
 
 [node name="Player" type="RigidBody3D"]
 axis_lock_angular_x = true
@@ -62,20 +71,33 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 current = true
 fov = 90.0
 
-[node name="FakeLHand" type="MeshInstance3D" parent="Camera"]
-transform = Transform3D(-0.08660254, -0.04698464, 0.017101007, 0, -0.034202013, -0.093969256, 0.05000001, -0.081379764, 0.029619807, -0.6, -0.46, -0.93)
-mesh = ExtResource("2_onrkg")
-skeleton = NodePath("../../LHand/Arm/LHandArea/Collider")
-surface_material_override/0 = ExtResource("3_qlg0r")
-
-[node name="FakeRHand" type="MeshInstance3D" parent="Camera"]
-transform = Transform3D(0.08660254, -0.04698463, -0.017101007, 0, 0.034202017, -0.093969256, 0.05, 0.081379764, 0.029619811, 0.6, -0.5, -1)
-mesh = ExtResource("2_onrkg")
-skeleton = NodePath("../../LHand/Arm/LHandArea/Collider")
-surface_material_override/0 = ExtResource("3_qlg0r")
-
 [node name="RayCast3D" type="RayCast3D" parent="Camera"]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
+
+[node name="RayCast3D2" type="RayCast3D" parent="Camera"]
+target_position = Vector3(0, -1, 1)
+
+[node name="FakeLHand" type="SpringArm3D" parent="Camera"]
+transform = Transform3D(0.8660253, 0.12940946, -0.48296288, 0, -0.9659258, -0.25881898, -0.5, 0.22414382, -0.8365163, -0.3, -0.20000005, -0.2)
+shape = SubResource("BoxShape3D_qlg0r")
+spring_length = 1.2
+
+[node name="Mesh" type="MeshInstance3D" parent="Camera/FakeLHand"]
+transform = Transform3D(-0.10000002, -1.5101635e-08, 5.537083e-09, 9.313227e-10, -0.017364815, 0.098480776, -3.7252903e-09, 0.098480776, 0.017364815, 0, 0, 0)
+mesh = ExtResource("2_onrkg")
+skeleton = NodePath("../../../LHand/Arm/LHandArea/Collider")
+surface_material_override/0 = ExtResource("3_qlg0r")
+
+[node name="FakeRHand" type="SpringArm3D" parent="Camera"]
+transform = Transform3D(0.8660253, -0.12940952, 0.48296288, -4.4703484e-08, -0.9659258, -0.25881898, 0.5, 0.22414377, -0.8365163, 0.3, -0.20000005, -0.2)
+shape = SubResource("BoxShape3D_qlg0r")
+spring_length = 1.2
+
+[node name="Mesh" type="MeshInstance3D" parent="Camera/FakeRHand"]
+transform = Transform3D(0.10000001, -7.450581e-09, 1.8626451e-09, -4.656613e-09, -0.008715581, 0.09961947, 3.7252903e-09, -0.09961946, -0.008715583, 0, 0, 0)
+mesh = ExtResource("2_onrkg")
+skeleton = NodePath("../../../LHand/Arm/LHandArea/Collider")
+surface_material_override/0 = ExtResource("3_qlg0r")
 
 [node name="LHand" type="Node3D" parent="."]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 1.5, 0)
@@ -189,14 +211,26 @@ surface_material_override/0 = ExtResource("3_qlg0r")
 transform = Transform3D(1, 0, 1.6703743e-22, 0, 1, 0, 1.6703743e-22, 0, 1, 0, -0.12, 0)
 shape = SubResource("BoxShape3D_onrkg")
 
-[node name="FakeLFoot" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -0.2, 0, 0)
+[node name="FakeLFoot" type="SpringArm3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, -0.2, 0.8, 0)
+shape = SubResource("BoxShape3D_tuyoq")
+spring_length = 0.8
+
+[node name="Mesh" type="MeshInstance3D" parent="FakeLFoot"]
+transform = Transform3D(0.1, 0, 0, 0, -4.371139e-09, 0.1, 0, -0.1, -4.371139e-09, 0, 0.1, 0)
 mesh = ExtResource("3_i3pqv")
+skeleton = NodePath("../..")
 surface_material_override/0 = ExtResource("3_qlg0r")
 
-[node name="FakeRFoot" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0.2, 0, 0)
+[node name="FakeRFoot" type="SpringArm3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0.2, 0.8, 0)
+shape = SubResource("BoxShape3D_fjrip")
+spring_length = 0.8
+
+[node name="Mesh" type="MeshInstance3D" parent="FakeRFoot"]
+transform = Transform3D(0.1, 0, 0, 0, -4.371139e-09, 0.1, 0, -0.1, -4.371139e-09, 0, 0.1, 0)
 mesh = ExtResource("3_i3pqv")
+skeleton = NodePath("../..")
 surface_material_override/0 = ExtResource("3_qlg0r")
 
 [node name="Timer" type="Timer" parent="."]
