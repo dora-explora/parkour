@@ -457,9 +457,10 @@ text_direction = 1
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -49, 4, 0)
 pixel_size = 0.01
 double_sided = false
-text = "When you hop or dive, you will start MOVING.
-Once you're moving, you can start using your legs!
-Try holding left click while moving.
+text = "When you hop or dive, you will start MOVING (as shown
+by the indicator in the bottom left). Once you're moving, 
+you can start using your legs!
+Try holding left click while MOVING.
 
 When your legs are out, they'll stay at the bottom of
 the screen. Looking up or down will move your legs too."

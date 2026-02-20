@@ -5,8 +5,8 @@ var acceleration = 10000.
 var aircceleration = 1000.
 var jump_impulse = 5.
 var jump_forward_impulse = 5.
-var h_sens = 0.15
-var v_sens = 0.0025
+var h_sens: float
+var v_sens: float
 var hand_length = 2.
 #var pushback = 5000.
 var pushback = 0.
@@ -24,6 +24,14 @@ var _moving: bool = false
 var _handsav := [Vector2.ZERO, Vector2.ZERO]
 var _feetav := [Vector2.ZERO, Vector2.ZERO]
 var _grabbings: Array[Area3D] = [null, null]
+
+func _ready() -> void:
+	h_sens = globals.sens * 0.2 + 0.06
+	v_sens = globals.sens * 0.003 + 0.001
+	$Camera.fov = globals.fov
+
+func _process(_delta: float) -> void:
+	$Indicator.visible = _moving
 
 func _physics_process(delta: float) -> void:
 	if _stopped: return

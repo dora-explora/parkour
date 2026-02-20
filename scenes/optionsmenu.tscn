@@ -1,0 +1,82 @@
+[gd_scene load_steps=4 format=3 uid="uid://bbgxgjepcpytu"]
+
+[ext_resource type="Script" uid="uid://dqk4uy0nl2fma" path="res://scripts/optionsmenu.gd" id="1_ftw57"]
+
+[sub_resource type="SystemFont" id="SystemFont_7q3kq"]
+font_weight = 800
+subpixel_positioning = 0
+
+[sub_resource type="LabelSettings" id="LabelSettings_5mbse"]
+font = SubResource("SystemFont_7q3kq")
+font_size = 64
+
+[node name="Panel" type="PanelContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 216.0
+offset_top = 108.0
+offset_right = -168.0
+offset_bottom = -108.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ftw57")
+
+[node name="VBox" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBox"]
+layout_mode = 2
+text = "Options"
+label_settings = SubResource("LabelSettings_5mbse")
+horizontal_alignment = 1
+
+[node name="Margin1" type="MarginContainer" parent="VBox"]
+custom_minimum_size = Vector2(700, 100)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="FOVLabel" type="Label" parent="VBox/Margin1"]
+layout_mode = 2
+size_flags_vertical = 1
+text = "Fov: xx"
+horizontal_alignment = 1
+
+[node name="FOVSlider" type="HSlider" parent="VBox/Margin1"]
+layout_mode = 2
+size_flags_vertical = 4
+min_value = 60.0
+value = 80.0
+tick_count = 5
+ticks_on_borders = true
+
+[node name="Margin2" type="MarginContainer" parent="VBox"]
+custom_minimum_size = Vector2(700, 100)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="SensLabel" type="Label" parent="VBox/Margin2"]
+layout_mode = 2
+size_flags_vertical = 1
+text = "Sensitivity: xx%"
+horizontal_alignment = 1
+
+[node name="SensitivitySlider" type="HSlider" parent="VBox/Margin2"]
+layout_mode = 2
+size_flags_vertical = 4
+max_value = 1.0
+step = 0.05
+value = 0.5
+
+[node name="Margin3" type="MarginContainer" parent="VBox"]
+custom_minimum_size = Vector2(100, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="BackButton" type="Button" parent="VBox/Margin3"]
+layout_mode = 2
+text = "Back
+"

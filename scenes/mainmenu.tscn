@@ -55,9 +55,9 @@ icon = ExtResource("2_r3g3c")
 icon_alignment = 1
 expand_icon = true
 
-[node name="QuitButton" type="Button" parent="VBox/HBox"]
+[node name="OptionsButton" type="Button" parent="VBox/HBox"]
 custom_minimum_size = Vector2(240, 0)
 layout_mode = 2
-text = "Quit"
+text = "Options"
 icon_alignment = 1
 expand_icon = true

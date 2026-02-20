@@ -7,3 +7,5 @@ addons/
 
 *.mtl
 *.blend1*
+export/*
+parkour.zip

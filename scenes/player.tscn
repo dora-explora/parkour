@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://bdaau0vqxi26q"]
+[gd_scene load_steps=16 format=3 uid="uid://bdaau0vqxi26q"]
 
 [ext_resource type="Script" uid="uid://cp1fcutnw7ivn" path="res://scripts/player.gd" id="1_4flbx"]
 [ext_resource type="ArrayMesh" uid="uid://t3ua3nc7d7y1" path="res://assets/hand.obj" id="2_onrkg"]
@@ -31,6 +31,10 @@ size = Vector3(0.2, 0.4, 0.1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_fjrip"]
 size = Vector3(0.2, 0.4, 0.1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_qlg0r"]
+radius = 60.0
+height = 120.0
 
 [node name="Player" type="RigidBody3D"]
 axis_lock_angular_x = true
@@ -235,5 +239,18 @@ surface_material_override/0 = ExtResource("3_qlg0r")
 
 [node name="Timer" type="Timer" parent="."]
 one_shot = true
+
+[node name="Indicator" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -40.0
+offset_right = 40.0
+grow_vertical = 0
+
+[node name="Mesh" type="MeshInstance2D" parent="Indicator"]
+position = Vector2(100, -50)
+mesh = SubResource("SphereMesh_qlg0r")
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

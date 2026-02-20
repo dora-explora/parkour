@@ -14,6 +14,10 @@ config/name="parkour"
 run/main_scene="uid://bjps00dbunvcl"
 config/features=PackedStringArray("4.5", "Forward Plus")
 
+[autoload]
+
+globals="*res://scripts/globals.gd"
+
 [display]
 
 display_server/driver.linuxbsd="wayland"
